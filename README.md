@@ -329,6 +329,4 @@ decorators. Tests cover:
 - `tests/test_on_converter.py` — `FasterWhisperConverter` model loading/transcription against a mock audio sample (`tests/moks/hello_audio_mok.ogg`) — **requires a real local model and, ideally, a CUDA GPU** to run in reasonable time.
 - `tests/test_on_process_chunk.py` / `tests/test_on_streaming_convert_.py` — `StreamingConverter` buffering and prefix-confirmation logic using fully mocked/fake converters (no GPU required).
 
-Note that `tests/moks/ModelsEnum.py` currently hardcodes a Windows model path and
-`device="cpu"` — update this to a valid local model path and `device="cuda"` for your machine
-before running the converter-dependent tests.
+Note that `tests/moks/ModelsEnum.py` currently assumes that large-v3 version is installed
