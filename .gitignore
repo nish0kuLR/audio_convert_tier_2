@@ -23,5 +23,6 @@ __pycache__/
 Thumbs.db
 
 # Model files
-whisper_models/
+whisper_models/*
+!whisper_models/.gitkeep
 
