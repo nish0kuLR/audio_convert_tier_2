@@ -23,11 +23,9 @@ def preload_nvidia_dlls() -> None:
         if d is None:
             print(f"Warning: '{pkg}' not found (skipping)")
             continue
-        os.add_dll_directory(d)  # harmless fallback, keep it too
+        os.add_dll_directory(d)  
         dll_paths.extend(glob.glob(os.path.join(d, "*.dll")))
 
-    # dependency order is unknown, so retry in passes until nothing
-    # new succeeds — this resolves load order automatically
     remaining = dll_paths
     while remaining:
         still_failing = []
@@ -56,7 +54,7 @@ from source.audio_sources.MicrophoneSource import MicrophoneSource
 from source.WhisperConfig import WhisperConfig
 
 #rewrite MODEL_PATH for installed model
-MODEL_PATH:Path = Path(__file__).parent / "whisper_models"
+MODEL_PATH:Path = Path(__file__).parent / "whisper_models/large-v3"
 
 def main() -> None:
     model_to_use = WhisperConfig(model_path=MODEL_PATH, language="ru", device="cuda")
