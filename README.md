@@ -32,35 +32,7 @@ transcription pipeline that emits incrementally-stabilizing live text.
 The codebase follows a **ports-and-adapters** style so that the transcription core never
 depends on *how* audio arrives, or *which* speech-to-text engine is used:
 
-```
-                     ┌─────────────────────────┐
-                     │        ISource           │  (port)
-                     │  ISyncSource / IAsyncSource
-                     └───────────┬──────────────┘
-                                 │ implemented by
-             ┌───────────────────┴───────────────────┐
-             │                                        │
-   ┌─────────────────────┐                 ┌───────────────────────────┐
-   │  MicrophoneSource     │                 │  WebsocketEndpointSource   │
-   │  (blocking, sync)     │                 │  (async, FastAPI WebSocket)│
-   └─────────────────────┘                 └───────────────────────────┘
-             │  np.ndarray chunks                     │  np.ndarray chunks
-             └───────────────────┬─────────────────────┘
-                                  ▼
-                     ┌─────────────────────────┐
-                     │   StreamingConverter      │  orchestrates buffering +
-                     │   (process_chunk)         │  incremental stabilization
-                     └───────────┬──────────────┘
-                                  │ uses (port)
-                     ┌─────────────────────────┐
-                     │    IAudioConverter        │
-                     └───────────┬──────────────┘
-                                  │ implemented by
-                     ┌─────────────────────────┐
-                     │  FasterWhisperConverter   │  wraps faster-whisper's
-                     │  (CTranslate2 / CUDA)     │  WhisperModel
-                     └─────────────────────────┘
-```
+![Architecture diagram: ...](./assets/architecture_diagram.svg)
 
 **Key components:**
 
